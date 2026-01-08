@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 
 void affiche(int* var, int i)
 {
@@ -39,4 +39,4 @@ int main(int argc, char** argv)
     affiche(var1, i);
 
 	return 0;
-}
+}*/
