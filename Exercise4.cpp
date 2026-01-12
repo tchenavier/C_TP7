@@ -3,56 +3,62 @@
 
 void saisie(float* aa, float* bb, float* cc)
 {
-	scanf_s("%f,var1");
-	scanf_s("%f,var2");
-	scanf_s("%f,var3");
+	scanf_s("%f,var1",aa);
+	scanf_s("%f,var2",bb);
+	scanf_s("%f,var3",cc);
 }
 
 float* calcul(float aa, float bb, float cc)
 {
 	float delta = bb*bb - 4 * aa * cc;
-	
-	return &delta;
+	float* resulta = nullptr; //pas d'espace allouer
+
+	if (delta > 0)
+	{
+		resulta = new float[3]; //Alloue une taille de 3 pour le nombre de solution; plus solution 1 et 2
+		resulta[0] = 2;
+		resulta[1] = -bb + sqrt(delta) / 2 * aa;
+		resulta[2] = -bb - sqrt(delta) / 2 * aa;
+	}
+	else if (delta == 0)
+	{
+		resulta = new float[2]; //Alloue une taille de 3 pour le nombre de solution; plus solution 1
+		resulta[0] = 1;
+		resulta[1]= - bb / 2 * aa;
+	}
+
+	return resulta;
 	}
 
 int main(int argc, char** argv)
 {
-   float a, b, c, *delta;
+   float a, b, c, *solutions;
 
 
 	saisie(&a, &b, &c);
-	delta = calcul(a, b, c);
+	solutions = calcul(a, b, c);
 
-	float* resulta = new float;
-	float* resulta2 = new float;
-
-	if (*delta > 0)
+	if (solutions != nullptr)
 	{
-		*resulta = -b + sqrt(*delta) / 2 * a;
-		*resulta2 = -b - sqrt(*delta) / 2 * a;
+		if (solutions[0] == 2)
+		{
+			printf_s("Il y a deux de solution Reelle.\n");
+			printf_s("%f\n", solutions[1]);
+			printf_s("%f\n", solutions[2]);
+		}
+		else if (solutions[0] == 1)
+		{
+			printf_s("Il n'y a qu'une solution Reelle.\n");
+			printf_s("%f\n", solutions[1]);
+		}
+		
 
-		printf_s("%f\n", *delta);
-		printf_s("Il y a deux de solution Réelle.\n");
-		printf_s("%f\n", *resulta);
-		printf_s("%f\n", *resulta2);
-
-	}
-	else if (*delta == 0)
-	{
-		*resulta - b / 2 * a;
-		printf_s("%f\n", *delta);
-		printf_s("Il n'y a qu'une solution Réelle.\n");
-		printf_s("%f\n", *resulta);
+		delete solutions;
 	}
 	else
 	{
-		printf_s("%f\n", *delta);
-		printf_s("Il n'y a pas de solution Réelle.\n");
+		printf_s("Il n'y a pas de solution Reelle.\n");
 	}
 	
-
-	delete resulta;
-	delete resulta2;
-
     return 0;
 }
